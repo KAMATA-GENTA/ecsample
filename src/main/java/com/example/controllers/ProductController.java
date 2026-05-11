@@ -1,6 +1,5 @@
 package com.example.controllers;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -9,28 +8,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.entity.Product;
+import com.example.mapper.ProductMapper;
+
+import lombok.AllArgsConstructor;
 
 @Controller
+@AllArgsConstructor
 public class ProductController {
+	private final ProductMapper productMapper;
 
 	@GetMapping("/products")
 	public String showList(Model model) {
-		List<Product> products = Arrays.asList(new Product(1, "コーヒーカップ", 1200), new Product(2, "ティーポット", 2400),
-				new Product(3, "マグカップ", 1500));
+		List<Product> products = productMapper.findAll();
 		model.addAttribute("products", products);
 		return "product/list";
 	}
 
 	@GetMapping("/product/{id}")
 	public String showDetail(@PathVariable("id") int id, Model model) {
-		Product product;
-		if (id == 1) {
-			product = new Product(1, "コーヒーカップ", 1200);
-		} else if (id == 2) {
-			product = new Product(2, "ティーポット", 2400);
-		} else {
-			product = new Product(0, "未登録の商品", 0);
-		}
+		Product product = productMapper.findById(id);
 		model.addAttribute("product", product);
 		return "product/detail";
 	}

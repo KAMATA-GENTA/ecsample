@@ -1,5 +1,8 @@
 package com.example.entity;
 
+import lombok.Data;
+
+@Data
 public class Product {
 	/**
 	 * @param id
@@ -15,16 +18,4 @@ public class Product {
 	private int id;
 	private String name;
 	private int price;
-
-	public final int getId() {
-		return id;
-	}
-
-	public final String getName() {
-		return name;
-	}
-
-	public final int getPrice() {
-		return price;
-	}
 }
