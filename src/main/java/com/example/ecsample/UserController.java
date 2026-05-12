@@ -9,9 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.ecsample.form.UserForm;
+import com.example.service.UserService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
+
+	private final UserService userService;
 
 	@GetMapping("/register")
 	public String showForm(Model model) {
@@ -29,6 +35,8 @@ public class UserController {
 		System.out.println("name = " + form.getName());
 		System.out.println("email = " + form.getEmail());
 		System.out.println("password = " + form.getPassword());
+
+		userService.register(form);
 
 		model.addAttribute("form", form);
 		return "user/result";
